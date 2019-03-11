@@ -20,10 +20,10 @@ def main():
     print('Un-comment the calls in MAIN one by one')
     print(' to run the testing code as you complete the TODOs.')
 
-    # run_test_simple_t()
-    # run_test_set_colors()
-    # run_test_move_by()
-    # run_test_clone()
+    run_test_simple_t()
+    run_test_set_colors()
+    run_test_move_by()
+    run_test_clone()
 
 
 def run_test_simple_t():
@@ -170,7 +170,13 @@ class CapitalT(object):
         #   and *** NO OTHER INSTANCE VARIABLES. ***
         #   Note: Implement   attach_to   before testing this __init__ method.
         # ---------------------------------------------------------------------
-
+        self.h_rect = rg.Rectangle(
+            rg.Point(intersection_center.x - width / 2, intersection_center.y - letter_thickness / 2),
+            rg.Point(intersection_center.x + width / 2, intersection_center.y + letter_thickness / 2))
+        self.v_rect = rg.Rectangle(
+            rg.Point(intersection_center.x - letter_thickness / 2, intersection_center.y - letter_thickness / 2),
+            rg.Point(intersection_center.x + letter_thickness / 2,
+                     intersection_center.y + height - letter_thickness / 2))
     def attach_to(self, window):
         """
         What comes in:
@@ -198,7 +204,9 @@ class CapitalT(object):
         #     c. Compare the graphics window to the   simple_t.pdf   pictures.
         #        They should look exactly the same as each other.
         # ---------------------------------------------------------------------
-
+        self.v_rect.attach_to(window)
+        self.h_rect.attach_to(window)
+        window.render()
     def set_colors(self, fill_color, outline_color):
         """
         What comes in:
@@ -230,7 +238,10 @@ class CapitalT(object):
         #     c. Compare the graphics window to the  set_colors.pdf   pictures.
         #        They should look exactly the same as each other.
         # ---------------------------------------------------------------------
-
+        self.v_rect.fill_color = fill_color
+        self.h_rect.fill_color = fill_color
+        self.v_rect.outline_color = outline_color
+        self.h_rect.outline_color = outline_color
     def move_by(self, dx, dy):
         """
         What comes in:
@@ -266,7 +277,14 @@ class CapitalT(object):
         #        Note: the pdf shows the different locations that
         #        the T moves through, but there is only one T at any moment.
         # ---------------------------------------------------------------------
-
+        self.v_rect.corner_1.x = self.v_rect.corner_1.x + dx
+        self.v_rect.corner_1.y = self.v_rect.corner_1.y + dy
+        self.v_rect.corner_2.x = self.v_rect.corner_2.x + dx
+        self.v_rect.corner_2.y = self.v_rect.corner_2.y + dy
+        self.h_rect.corner_1.x = self.h_rect.corner_1.x + dx
+        self.h_rect.corner_1.y = self.h_rect.corner_1.y + dy
+        self.h_rect.corner_2.x = self.h_rect.corner_2.x + dx
+        self.h_rect.corner_2.y = self.h_rect.corner_2.y + dy
     def clone(self):
         """
         What comes in:
@@ -300,7 +318,14 @@ class CapitalT(object):
         # IMPORTANT RESTRICTION: You are NOT permitted to add any instance
         # variables beyond  h_rect  and  v_rect, at any point of this exercise.
         #######################################################################
-
+        width = self.h_rect.corner_2.x - self.h_rect.corner_1.x
+        height = self.v_rect.corner_2.y - self.v_rect.corner_1.y
+        letter_thickness = self.h_rect.corner_2.y - self.h_rect.corner_1.y
+        intersection_center = rg.Point(self.h_rect.corner_1.x / 2 + self.h_rect.corner_2.x / 2,
+                                       self.v_rect.corner_1.y + letter_thickness / 2)
+        clone = CapitalT(intersection_center, width, height, letter_thickness)
+        clone.set_colors(self.v_rect.fill_color, self.v_rect.outline_color)
+        return (clone)
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
