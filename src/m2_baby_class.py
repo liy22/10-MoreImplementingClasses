@@ -110,11 +110,21 @@ def main():
 class Baby(object):
     def __init__(self,name):
         self.name = name
+        self.number_hour_passes = 0
         print("Hello baby " + self.name + "!")
     def feed_baby(self):
         print("Thank you for feeding baby " + self.name + ".")
+
+        self.number_hour_passes = 0
+
     def hour_passes(self):
-        
+        if self.number_hour_passes == 0:
+            print('Baby ' + self.name + ' is sleeping.')
+        elif self.number_hour_passes == 1:
+            print('Baby ' + self.name + ' is awake.  Time for food.')
+        else:
+            print('Baby ' + self.name + ' is CRYING uncontrollably!  Feed the Baby!')
+        self.number_hour_passes = self.number_hour_passes + 1
 
 
 

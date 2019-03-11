@@ -685,7 +685,10 @@ class Line(object):
         # floating-point errors while distinguishing numbers that really
         # are different from each other.
         #######################################################################
-
+        if round(self.slope(), 12) == round(line2.slope(), 12):
+            return True
+        else:
+            return False
     def reset(self):
         """
         What comes in:
@@ -724,7 +727,8 @@ class Line(object):
         #        The tests are already written (below).
         #        They include the Example in the above doc-string.
         # ---------------------------------------------------------------------
-
+        self.start = self.startpoint
+        self.end = self.endpoint
 
 ###############################################################################
 # The TEST functions for the  Line  class begin here.
