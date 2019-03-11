@@ -25,7 +25,6 @@ def main():
     run_test_move_by()
     run_test_clone()
 
-
 def run_test_simple_t():
     """
     Tests for the __init__ method and attach_to method.
