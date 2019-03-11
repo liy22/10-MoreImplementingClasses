@@ -4,8 +4,8 @@ NOTE: This is NOT rosegraphics -- it is your OWN Line class.
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
-         and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         and Yiqing Li.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import math
 import m1t_test_Line as m1t
@@ -17,7 +17,7 @@ import m1t_test_Line as m1t
 ###############################################################################
 
 # -----------------------------------------------------------------------------
-# TODO: 2.  Right-click on the  src  folder and
+# DONE: 2.  Right-click on the  src  folder and
 #               Mark Directory as ... Sources Root,
 #           if you have not already done so.
 #
@@ -178,6 +178,7 @@ class Line(object):
     """ Represents a line segment in 2-dimensional space. """
 
     def __init__(self, start, end):
+
         """
         What comes in:
           -- self
@@ -225,6 +226,11 @@ class Line(object):
         #        The tests are already written (below).
         #        They include the Example in the above doc-string.
         # ---------------------------------------------------------------------
+        self.start = start.clone()
+        self.end = end.clone()
+        self.startpoint = start
+        self.endpoint = end
+        self.nclone = 0
 
     def __repr__(self):
         """
@@ -297,6 +303,7 @@ class Line(object):
         return (self.start == line2.start) and (self.end == line2.end)
 
     def clone(self):
+
         """
         What comes in:
           -- self
@@ -326,7 +333,7 @@ class Line(object):
           :rtype: Line
         """
         # ---------------------------------------------------------------------
-        # TODO: 4.
+        # DONE: 4.
         #   a. READ the above specification, including the Example.
         #        ** ASK QUESTIONS AS NEEDED. **
         #        ** Be sure you understand it, ESPECIALLY the Example.
@@ -334,8 +341,14 @@ class Line(object):
         #        The tests are already written (below).
         #        They include the Example in the above doc-string.
         # ---------------------------------------------------------------------
+        clone_line = Line(self.start, self.end)
+        self.nclone = self.nclone + 1
+        return clone_line
+
 
     def reverse(self):
+
+
         """
         What comes in:
           -- self
@@ -360,7 +373,7 @@ class Line(object):
             print(line1 == line2)    # Should now print: True
         """
         # ---------------------------------------------------------------------
-        # TODO: 5.
+        # DONE: 5.
         #   a. READ the above specification, including the Example.
         #        ** ASK QUESTIONS AS NEEDED. **
         #        ** Be sure you understand it, ESPECIALLY the Example.
@@ -368,8 +381,13 @@ class Line(object):
         #        The tests are already written (below).
         #        They include the Example in the above doc-string.
         # ---------------------------------------------------------------------
+        temp = self.start
+        self.start = self.end
+        self.end = temp
+
 
     def slope(self):
+
         """
         What comes in:
           -- self
@@ -404,6 +422,14 @@ class Line(object):
         #        The tests are already written (below).
         #        They include the Example in the above doc-string.
         # ---------------------------------------------------------------------
+        import math
+        if (self.end.x - self.start.x == 0):
+            return math.inf
+        k1 = self.end.y - self.start.y
+        k2 = self.end.x - self.start.x
+        slope = k1/k2
+        return slope
+
 
     def length(self):
         """
@@ -437,7 +463,11 @@ class Line(object):
         #        The tests are already written (below).
         #        They include the Example in the above doc-string.
         # ---------------------------------------------------------------------
-
+        import math
+        x = (self.end.x -self.start.x)**2
+        y = (self.end.y - self.start.y)**2
+        length = math.sqrt(x + y)
+        return length
     def get_number_of_clones(self):
         """
         What comes in:
@@ -478,6 +508,7 @@ class Line(object):
         #        They include the Example in the above doc-string.
         # ---------------------------------------------------------------------
 
+        return self.nclone
     def line_plus(self, other_line):
         """
         What comes in:
@@ -511,7 +542,14 @@ class Line(object):
         #        The tests are already written (below).
         #        They include the Example in the above doc-string.
         # ---------------------------------------------------------------------
+        x1 = self.start.x + other_line.start.x
+        y1 = self.start.y + other_line.start.y
+        x2 = self.end.x + other_line.end.x
+        y2 = self.end.y + other_line.end.y
+        start = Point(x1,y1)
+        end = Point(x2,y2)
 
+        return(Line(start,end))
     def line_minus(self, other_line):
         """
         What comes in:
@@ -545,7 +583,14 @@ class Line(object):
         #        The tests are already written (below).
         #        They include the Example in the above doc-string.
         # ---------------------------------------------------------------------
+        x1 = self.start.x - other_line.start.x
+        y1 = self.start.y - other_line.start.y
+        x2 = self.end.x - other_line.end.x
+        y2 = self.end.y - other_line.end.y
+        start = Point(x1,y1)
+        end = Point(x2,y2)
 
+        return(Line(start,end))
     def midpoint(self):
         """
         What comes in:
@@ -572,7 +617,11 @@ class Line(object):
         #        The tests are already written (below).
         #        They include the Example in the above doc-string.
         # ---------------------------------------------------------------------
+        x1 = self.start.x + self.end.x
+        y1 = self.start.y + self.end.y
 
+        midpoint = Point(x1/2,y1/2)
+        return midpoint
     def is_parallel(self, line2):
         """
         What comes in:
